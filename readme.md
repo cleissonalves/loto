@@ -1,6 +1,8 @@
 Aplicacao CLI para consulta e analize de resultados de sorteios das loterias da Caixa.
-API: https://github.com/guto-alves/loterias-api
 
+ API: https://github.com/guto-alves/loterias-api
+
+```bash
 Usage: loto <COMMAND>
 
 Commands:
@@ -31,3 +33,4 @@ loto analisar --help
 * Os numeros de uma aposta podem ser separados por espaco, ',' ou '-'.
 * Arquivos de input devem conter em cada linha uma sequencia de numeros referentes a uma aposta.
 * Atualizacao de dados feita a cada 12h.
+```
