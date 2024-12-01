@@ -1,4 +1,4 @@
-Aplicacao CLI para consulta e analize de resultados de sorteios das loterias da Caixa.
+Aplicacao CLI para consulta e analise de resultados de sorteios das loterias da Caixa.
 
  API: https://github.com/guto-alves/loterias-api
 
