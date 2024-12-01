@@ -1,7 +1,6 @@
 // This file is unfinished and deprecated and is kept as an example
 // Please use the cli_derive.rs file instead.
 #![deprecated]
-// #![allow(dead_code)]
 
 use crate::commands::{consultar, consultar_numeros};
 use crate::{data::Jogo, parsers};
