@@ -1,6 +1,16 @@
 Aplicacao CLI para consulta e analise de resultados de sorteios das loterias da Caixa.
 
- API: https://github.com/guto-alves/loterias-api
+API: https://github.com/guto-alves/loterias-api
+
+```bash
+loto --help
+```
+
+Caso o arquivo binário não esteja presente no `PATH` do sistema, navegue no terminal até o diretório do arquivo binário e preceda os comando com `./`.
+
+```bash
+./loto --help
+```
 
 ```bash
 Usage: loto <COMMAND>
