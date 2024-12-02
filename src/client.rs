@@ -1,9 +1,7 @@
 use crate::data::{Jogo, Sorteio};
 use anyhow::{bail, Context, Ok, Result};
-use std::{
-    fs::File,
-    io::{Read, Write},
-};
+use std::fs::File;
+
 // https://github.com/guto-alves/loterias-api
 pub const API_PATH: &'static str = "https://loteriascaixa-api.herokuapp.com/api/";
 
@@ -64,29 +62,29 @@ pub fn download_json(jogo: &Jogo) -> Result<()> {
     Ok(())
 }
 
-pub fn save_as_json(sorteios: &Vec<Sorteio>) -> Result<()> {
-    if let Some(record) = sorteios.first() {
-        let json_data = serde_json::to_string(sorteios)?;
-        let filename = format!("{}.json", record.jogo);
-        let mut file = File::create(filename)?;
-        file.write_all(json_data.as_bytes())?;
-        return Ok(());
-    }
-    Ok(())
-}
+// pub fn save_as_json(sorteios: &Vec<Sorteio>) -> Result<()> {
+//     if let Some(record) = sorteios.first() {
+//         let json_data = serde_json::to_string(sorteios)?;
+//         let filename = format!("{}.json", record.jogo);
+//         let mut file = File::create(filename)?;
+//         file.write_all(json_data.as_bytes())?;
+//         return Ok(());
+//     }
+//     Ok(())
+// }
 
-pub fn load_from_json(jogo: &Jogo) -> Result<Vec<Sorteio>> {
-    let filepath = format!("{}.json", jogo);
+// pub fn load_from_json(jogo: &Jogo) -> Result<Vec<Sorteio>> {
+//     let filepath = format!("{}.json", jogo);
 
-    // Open the file
-    let mut file = File::open(filepath)?;
+//     // Open the file
+//     let mut file = File::open(filepath)?;
 
-    // Read into String
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)?;
+//     // Read into String
+//     let mut contents = String::new();
+//     file.read_to_string(&mut contents)?;
 
-    // Deserialize
-    let sorteios: Vec<Sorteio> = serde_json::from_str(&contents)?;
+//     // Deserialize
+//     let sorteios: Vec<Sorteio> = serde_json::from_str(&contents)?;
 
-    Ok(sorteios)
-}
+//     Ok(sorteios)
+// }

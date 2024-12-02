@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use crate::{
     client,
     data::{Jogo, Sorteio},
+    sys_tmp,
     util::{self, formatar_dinheiro},
 };
 use anyhow::Result;
@@ -164,19 +165,19 @@ fn analisar_sorteios(jogo: &Jogo, aposta: &[u8], sorteios: &Vec<Sorteio>) {
 pub fn historico(jogo: &Jogo, quantidade: usize, atualizar: bool) -> Result<()> {
     let mut sorteios: Vec<Sorteio>;
 
-    let is_update_needed = util::is_update_needed(&jogo);
+    let is_update_needed = sys_tmp::is_update_needed(&jogo);
 
-    if atualizar || is_update_needed {
+    if atualizar || is_update_needed.unwrap_or(true) {
         let content = client::fetch_all(&jogo)?;
-        client::save_as_json(&content)?;
+        sys_tmp::save_json(&content)?;
     }
 
-    if let Ok(value) = client::load_from_json(&jogo) {
+    if let Ok(value) = sys_tmp::load_json(&jogo) {
         sorteios = value;
     } else {
         let content = client::fetch_all(&jogo)?;
-        client::save_as_json(&content)?;
-        sorteios = client::load_from_json(&jogo)?;
+        sys_tmp::save_json(&content)?;
+        sorteios = sys_tmp::load_json(&jogo)?;
     }
 
     if quantidade > 0 {
@@ -258,19 +259,19 @@ pub fn imprimir_numeros_mais_sorteados(sorteios: &Vec<Sorteio>, quantidade: usiz
 pub fn analisar(jogo: &Jogo, numeros: &[u8], quantidade: usize, atualizar: bool) -> Result<()> {
     let mut sorteios: Vec<Sorteio>;
 
-    let is_update_needed = util::is_update_needed(&jogo);
+    let is_update_needed = sys_tmp::is_update_needed(&jogo);
 
-    if atualizar || is_update_needed {
+    if atualizar || is_update_needed.unwrap_or(true) {
         let content = client::fetch_all(&jogo)?;
-        client::save_as_json(&content)?;
+        sys_tmp::save_json(&content)?;
     }
 
-    if let Ok(value) = client::load_from_json(&jogo) {
+    if let Ok(value) = sys_tmp::load_json(&jogo) {
         sorteios = value;
     } else {
         let content = client::fetch_all(&jogo)?;
-        client::save_as_json(&content)?;
-        sorteios = client::load_from_json(&jogo)?;
+        sys_tmp::save_json(&content)?;
+        sorteios = sys_tmp::load_json(&jogo)?;
     }
 
     if quantidade > 0 {
