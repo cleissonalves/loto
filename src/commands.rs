@@ -27,10 +27,12 @@ pub fn consultar_numeros(jogo: &Jogo, apostas: &Vec<&[u8]>) -> Result<()> {
         }
         let premiado = jogo.get_prize_matches().contains(&acertos);
         if premiado {
-            let out = format!(" -> Acertos: {} APOSTA PREMIADA! 🎉", acertos).to_string();
+            // let out = format!(" -> Acertos: {}, APOSTA PREMIADA! 🎉", acertos).to_string();
+            let out = format!(" (Acertou {}) APOSTA PREMIADA! 🎉", acertos).to_string();
             println!("{}", out.bright_green());
         } else {
-            println!(" -> Acertos: {}", acertos);
+            // println!(" -> Acertos: {}", acertos);
+            println!(" (Acertou {})", acertos);
         }
     }
 
