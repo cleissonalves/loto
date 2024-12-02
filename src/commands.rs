@@ -188,8 +188,8 @@ pub fn historico(jogo: &Jogo, quantidade: usize, atualizar: bool) -> Result<()> 
     imprimir_sorteios(&sorteios);
     imprimir_numeros_mais_sorteados(&sorteios, 10);
 
-    println!("\nPara mais resultados, adicione a opcao '--quantidade <valor>' ou '-q <valor>'.");
-    println!("Para atualizar os dados use '--atualizar' ou '-a'.\n");
+    println!("\nPara mais resultados adicione '--quantidade <valor>' ou '-q <valor>'.");
+    // println!("Para atualizar os dados use '--atualizar' ou '-a'.\n");
 
     Ok(())
 }
@@ -248,12 +248,17 @@ pub fn imprimir_numeros_mais_sorteados(sorteios: &Vec<Sorteio>, quantidade: usiz
 
     let mut output = Vec::new();
     for (number, count) in ocorrencias {
-        output.push(format!("{} (x{})", number, count));
+        output.push(format!("{}", number).yellow());
+        output.push(format!("(x{}) ", count).white());
     }
 
-    let output = output.join(", ");
+    print!("Numeros Mais Sorteados: ");
 
-    println!("Numeros Mais Sorteados: {}", output);
+    for cs in output {
+        print!("{}", cs);
+    }
+
+    println!();
 }
 
 pub fn analisar(jogo: &Jogo, numeros: &[u8], quantidade: usize, atualizar: bool) -> Result<()> {
