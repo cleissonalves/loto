@@ -3,6 +3,13 @@ name = "loto"
 version = "0.1.0"
 edition = "2021"
 
+# Optimizations from: https://github.com/johnthagen/min-sized-rust
+[profile.release]
+strip = true  # Automatically strip symbols from the binary.
+lto = true # Link Time Optimization.
+codegen-units = 1 # Allow for maximum size reduction optimizations.
+# panic = "abort" # remove unwinds of stack on panics to produce helpful backtraces. Use with caution, possible impact on behaviour.
+
 [dependencies]
 anyhow = "1.0.93"
 atty = "0.2.14"
