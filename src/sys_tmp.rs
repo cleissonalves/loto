@@ -9,7 +9,7 @@ use std::{
 };
 
 pub const APP_NAME: &'static str = "loto";
-pub const UPDATE_HOURS_INTERVAL: u64 = 10;
+pub const UPDATE_HOURS_INTERVAL: u64 = 24;
 
 // USES SYSTEM TEMP FOLDER
 // On Windows: C:\Users\YourUser\AppData\Local\Temp\loto\<filename>.json

@@ -168,12 +168,10 @@ fn analisar_sorteios(jogo: &Jogo, aposta: &[u8], sorteios: &Vec<Sorteio>) {
     print!("Total de premiacoes: {}\n", matches.len());
 }
 
-pub fn historico(jogo: &Jogo, quantidade: usize, atualizar: bool) -> Result<()> {
+pub fn historico(jogo: &Jogo, quantidade: usize) -> Result<()> {
     let mut sorteios: Vec<Sorteio>;
 
-    let is_update_needed = sys_tmp::is_update_needed(&jogo);
-
-    if atualizar || is_update_needed.unwrap_or(true) {
+    if sys_tmp::is_update_needed(&jogo).unwrap_or(true) {
         let content = client::fetch_all(&jogo)?;
         sys_tmp::save_json(&content)?;
     }
@@ -195,7 +193,6 @@ pub fn historico(jogo: &Jogo, quantidade: usize, atualizar: bool) -> Result<()> 
     imprimir_numeros_mais_sorteados(&sorteios, 10);
 
     println!("\nPara mais resultados adicione '--quantidade <valor>' ou '-q <valor>'.");
-    // println!("Para atualizar os dados use '--atualizar' ou '-a'.\n");
 
     Ok(())
 }
@@ -267,12 +264,10 @@ pub fn imprimir_numeros_mais_sorteados(sorteios: &Vec<Sorteio>, quantidade: usiz
     println!();
 }
 
-pub fn analisar(jogo: &Jogo, numeros: &[u8], quantidade: usize, atualizar: bool) -> Result<()> {
+pub fn analisar(jogo: &Jogo, numeros: &[u8], quantidade: usize) -> Result<()> {
     let mut sorteios: Vec<Sorteio>;
 
-    let is_update_needed = sys_tmp::is_update_needed(&jogo);
-
-    if atualizar || is_update_needed.unwrap_or(true) {
+    if sys_tmp::is_update_needed(&jogo).unwrap_or(true) {
         let content = client::fetch_all(&jogo)?;
         sys_tmp::save_json(&content)?;
     }
@@ -294,7 +289,6 @@ pub fn analisar(jogo: &Jogo, numeros: &[u8], quantidade: usize, atualizar: bool)
     analisar_sorteios(&jogo, &numeros, &sorteios);
 
     println!("\nPara mais resultados, adicione a opcao '--quantidade <valor>' ou '-q <valor>'.");
-    println!("Para atualizar os dados use '--atualizar' ou '-a'.\n");
 
     Ok(())
 }
