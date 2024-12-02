@@ -41,7 +41,7 @@ loto consultar --help
 loto historico --help
 loto analisar --help
 
-* Os numeros de uma aposta podem ser separados por espaco, ',' ou '-'.
+* Os numeros de uma aposta podem ser separados por ',' ou '-'.
 * '< input.txt' carrega apostas para o comando consultar.
 * Arquivos de input devem conter em cada linha uma sequencia de numeros referentes a uma aposta.
 * '> output.txt' exporta o resultado de qualquer comando.

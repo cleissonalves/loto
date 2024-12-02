@@ -57,7 +57,7 @@ fn print_sorteio_info(sorteio: &Sorteio) {
         let n_string = format!(" {:02}", n).to_string();
         output.push_str(&n_string);
     }
-    println!("{}", output.yellow());
+    println!("{}", output.bright_yellow());
     println!("Data: {}", sorteio.data);
     println!("Concurso: {}", sorteio.concurso);
     println!("Premiacoes: {}", sorteio.premiacoes());
@@ -251,7 +251,7 @@ pub fn imprimir_numeros_mais_sorteados(sorteios: &Vec<Sorteio>, quantidade: usiz
 
     let mut output = Vec::new();
     for (number, count) in ocorrencias {
-        output.push(format!("{}", number).yellow());
+        output.push(format!("{}", number).bright_yellow());
         output.push(format!("(x{}) ", count).white());
     }
 
