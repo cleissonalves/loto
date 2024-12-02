@@ -1,5 +1,6 @@
 [package]
 name = "loto"
+homepage = "https://github.com/cleissonalves/loto"
 authors = ["cleissonalves.dev@outlook.com"]
 description = "Aplicacao CLI para consulta e analise de resultados de sorteios das loterias da Caixa."
 version = "0.1.1"
