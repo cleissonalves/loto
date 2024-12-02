@@ -148,7 +148,11 @@ fn analisar_sorteios(jogo: &Jogo, aposta: &[u8], sorteios: &Vec<Sorteio>) {
             continue;
         }
 
-        println!("[{} acertos: {} apostas]", n, sorteios_com_n_acertos.len());
+        println!(
+            "[{} acertos: {} aposta(s)]",
+            n,
+            sorteios_com_n_acertos.len()
+        );
 
         for s in sorteios_com_n_acertos {
             for m in s {
