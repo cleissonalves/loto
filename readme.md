@@ -4,7 +4,7 @@ API: https://github.com/guto-alves/loterias-api
 
 Para a manutencao da hospedagem da API utilizada, considere fazer uma DOACAO para o autor da API através do link acima.
 
-Caso o arquivo executavel não esteja presente no `PATH` do sistema, navegue no terminal até o diretório do arquivo executavel e preceda os comando com `./`. Ex: `./loto --help` ou `./loto.exe --help` no Windows.
+Caso o arquivo executavel não esteja presente no `PATH` do sistema, navegue no terminal até o diretório do arquivo executavel e preceda os comandos com `./`. Ex: `./loto --help` ou `./loto.exe --help` no Windows.
 
 ```bash
 loto --help
