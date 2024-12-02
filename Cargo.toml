@@ -1,6 +1,8 @@
 [package]
 name = "loto"
-version = "0.1.0"
+authors = ["cleissonalves.dev@outlook.com"]
+description = "Aplicacao CLI para consulta e analise de resultados de sorteios das loterias da Caixa."
+version = "0.1.1"
 edition = "2021"
 
 # Optimizations from: https://github.com/johnthagen/min-sized-rust
