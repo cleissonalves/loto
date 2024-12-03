@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use crate::{
     client,
     data::{Jogo, Sorteio},
-    sys_tmp,
+    file,
     util::{self, formatar_dinheiro},
 };
 use anyhow::Result;
@@ -171,17 +171,17 @@ fn analisar_sorteios(jogo: &Jogo, aposta: &[u8], sorteios: &Vec<Sorteio>) {
 pub fn historico(jogo: &Jogo, quantidade: usize) -> Result<()> {
     let mut sorteios: Vec<Sorteio>;
 
-    if sys_tmp::is_update_needed(&jogo).unwrap_or(true) {
+    if file::is_update_needed(&jogo).unwrap_or(true) {
         let content = client::fetch_all(&jogo)?;
-        sys_tmp::save_json(&content)?;
+        file::save_json(&content)?;
     }
 
-    if let Ok(value) = sys_tmp::load_json(&jogo) {
+    if let Ok(value) = file::load_json(&jogo) {
         sorteios = value;
     } else {
         let content = client::fetch_all(&jogo)?;
-        sys_tmp::save_json(&content)?;
-        sorteios = sys_tmp::load_json(&jogo)?;
+        file::save_json(&content)?;
+        sorteios = file::load_json(&jogo)?;
     }
 
     if quantidade > 0 {
@@ -267,17 +267,17 @@ pub fn imprimir_numeros_mais_sorteados(sorteios: &Vec<Sorteio>, quantidade: usiz
 pub fn analisar(jogo: &Jogo, numeros: &[u8], quantidade: usize) -> Result<()> {
     let mut sorteios: Vec<Sorteio>;
 
-    if sys_tmp::is_update_needed(&jogo).unwrap_or(true) {
+    if file::is_update_needed(&jogo).unwrap_or(true) {
         let content = client::fetch_all(&jogo)?;
-        sys_tmp::save_json(&content)?;
+        file::save_json(&content)?;
     }
 
-    if let Ok(value) = sys_tmp::load_json(&jogo) {
+    if let Ok(value) = file::load_json(&jogo) {
         sorteios = value;
     } else {
         let content = client::fetch_all(&jogo)?;
-        sys_tmp::save_json(&content)?;
-        sorteios = sys_tmp::load_json(&jogo)?;
+        file::save_json(&content)?;
+        sorteios = file::load_json(&jogo)?;
     }
 
     if quantidade > 0 {

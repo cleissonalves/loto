@@ -1,5 +1,5 @@
 // This file is unfinished and deprecated and is kept as an example
-// Please use the sys_tmp.rs file instead.
+// Please use the file.rs file instead.
 #![deprecated]
 
 use crate::data::{Jogo, Sorteio};

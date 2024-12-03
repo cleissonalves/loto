@@ -47,6 +47,13 @@ pub fn load_json(jogo: &Jogo) -> Result<Vec<Sorteio>> {
 
 pub fn get_filepath(jogo: &Jogo) -> Result<PathBuf> {
     let filename = format!("{}.json", jogo);
+    let filepath = PathBuf::from(&filename);
+
+    Ok(filepath)
+}
+
+pub fn get_filepath_sys_tmp(jogo: &Jogo) -> Result<PathBuf> {
+    let filename = format!("{}.json", jogo);
 
     // Get the system's temporary directory
     let temp_dir = env::temp_dir();
