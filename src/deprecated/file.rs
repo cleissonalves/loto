@@ -11,7 +11,7 @@ use std::{
     time::{Duration, SystemTime},
 };
 
-pub const APP_NAME: &'static str = "loto";
+pub const APP_NAME: &str = "loto";
 
 pub fn save_as_json(sorteios: &Vec<Sorteio>) -> Result<()> {
     let json_data = serde_json::to_string(sorteios)?;
@@ -49,7 +49,7 @@ pub fn is_update_needed(jogo: &Jogo) -> bool {
         return true;
     }
 
-    return false;
+    false
 }
 
 fn was_file_recently_modified(filepath: &str) -> Result<bool> {

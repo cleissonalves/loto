@@ -14,13 +14,17 @@ codegen-units = 1 # Allow for maximum size reduction optimizations.
 # panic = "abort" # remove unwinds of stack on panics to produce helpful backtraces. Use with caution, possible impact on behaviour.
 
 [dependencies]
-anyhow = "1.0.93"
+anyhow = "1.0.95"
 atty = "0.2.14"
-clap = { version = "4.5.21", features = ["derive"] }
-colored = "2.1.0"
+clap = { version = "4.5.23", features = ["derive"] }
+colored = "2.2.0"
 # indicatif = "0.17.9"
 # derive_more = { version = "1.0.0", features = ["display"] }
-minreq = { version = "2.12.0", features = ["https"] }
-serde = { version = "1.0.215", features = ["derive"] }
-serde_json = "1.0.133"
+minreq = { version = "2.13.0", features = ["https"] }
+serde = { version = "1.0.216", features = ["derive"] }
+serde_json = "1.0.134"
 strum = { version = "0.26.3", features = ["derive"] }
+
+[lints.clippy]
+bool_comparison = "allow"
+zero_prefixed_literal = "allow"

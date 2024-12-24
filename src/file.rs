@@ -8,7 +8,7 @@ use std::{
     time::{Duration, SystemTime},
 };
 
-pub const APP_NAME: &'static str = "loto";
+pub const APP_NAME: &str = "loto";
 pub const UPDATE_HOURS_INTERVAL: u64 = 24;
 
 // USES SYSTEM TEMP FOLDER
@@ -30,7 +30,7 @@ pub fn save_json(sorteios: &Vec<Sorteio>) -> Result<()> {
 // On Windows: C:\Users\YourUser\AppData\Local\Temp\loto\<filename>.json
 // On Linux: /tmp/loto/<filename>.json
 pub fn load_json(jogo: &Jogo) -> Result<Vec<Sorteio>> {
-    let filepath = get_filepath(&jogo)?;
+    let filepath = get_filepath(jogo)?;
 
     // Open the file
     let mut file = File::open(&filepath)?;
@@ -71,14 +71,14 @@ pub fn get_filepath_sys_tmp(jogo: &Jogo) -> Result<PathBuf> {
 }
 
 pub fn is_update_needed(jogo: &Jogo) -> Result<bool> {
-    let filepath = get_filepath(&jogo)?;
+    let filepath = get_filepath(jogo)?;
     let was_updated = was_file_recently_modified(&filepath).unwrap_or(false);
 
     if was_updated == false {
         return Ok(true);
     }
 
-    return Ok(false);
+    Ok(false)
 }
 
 fn was_file_recently_modified(filepath: &PathBuf) -> Result<bool> {

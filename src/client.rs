@@ -3,7 +3,7 @@ use anyhow::{bail, Context, Ok, Result};
 use std::fs::File;
 
 // https://github.com/guto-alves/loterias-api
-pub const API_PATH: &'static str = "https://loteriascaixa-api.herokuapp.com/api/";
+pub const API_PATH: &str = "https://loteriascaixa-api.herokuapp.com/api/";
 
 pub fn fetch_latest(jogo: &Jogo) -> Result<Sorteio> {
     let request_url = format!("{}{}/latest", API_PATH, jogo);
@@ -53,7 +53,7 @@ pub fn download_json(jogo: &Jogo) -> Result<()> {
     let content = response.as_str().context("Parsing Response to json str")?;
 
     let json: serde_json::Value =
-        serde_json::from_str(&content).context("Deserializing json str to serde_json::Value")?;
+        serde_json::from_str(content).context("Deserializing json str to serde_json::Value")?;
 
     let mut file = File::create(format!("{jogo}.json")).context("Opening File")?;
 

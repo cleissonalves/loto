@@ -10,7 +10,7 @@ use anyhow::Result;
 use colored::{ColoredString, Colorize};
 
 pub fn consultar_numeros(jogo: &Jogo, apostas: &Vec<&[u8]>) -> Result<()> {
-    let sorteio = client::fetch_latest(&jogo)?;
+    let sorteio = client::fetch_latest(jogo)?;
 
     let show_aposta_id = apostas.len() > 1;
 
@@ -44,7 +44,7 @@ pub fn consultar_numeros(jogo: &Jogo, apostas: &Vec<&[u8]>) -> Result<()> {
 }
 
 pub fn consultar(jogo: &Jogo) -> Result<()> {
-    let sorteio = client::fetch_latest(&jogo)?;
+    let sorteio = client::fetch_latest(jogo)?;
 
     print_sorteio_info(&sorteio);
 
@@ -99,7 +99,7 @@ fn analisar_sorteio(aposta: &[u8], sorteio: &Sorteio) -> (u8, Vec<ColoredString>
 
     for n in &sorteio.numeros {
         let n_string = format!("{:02}", n).to_string();
-        if aposta.contains(&n) {
+        if aposta.contains(n) {
             matches += 1;
             output.push(n_string.bright_green());
         } else {
@@ -125,10 +125,10 @@ fn analisar_sorteio(aposta: &[u8], sorteio: &Sorteio) -> (u8, Vec<ColoredString>
     (matches, output)
 }
 
-fn analisar_sorteios(jogo: &Jogo, aposta: &[u8], sorteios: &Vec<Sorteio>) {
+fn analisar_sorteios(jogo: &Jogo, aposta: &[u8], sorteios: &[Sorteio]) {
     let matches: Vec<(u8, Vec<ColoredString>)> = sorteios
         .iter()
-        .map(|s| analisar_sorteio(&aposta, &s))
+        .map(|s| analisar_sorteio(aposta, s))
         .collect();
 
     let prize_matches = jogo.get_prize_matches();
@@ -146,7 +146,7 @@ fn analisar_sorteios(jogo: &Jogo, aposta: &[u8], sorteios: &Vec<Sorteio>) {
             .map(|s| s.1.clone())
             .collect();
 
-        if sorteios_com_n_acertos.len() == 0 {
+        if sorteios_com_n_acertos.is_empty() {
             continue;
         }
 
@@ -160,28 +160,28 @@ fn analisar_sorteios(jogo: &Jogo, aposta: &[u8], sorteios: &Vec<Sorteio>) {
             for m in s {
                 print!("{} ", m);
             }
-            print!("\n");
+            println!();
         }
-        print!("\n");
+        println!();
     }
 
-    print!("Total de premiacoes: {}\n", matches.len());
+    println!("Total de premiacoes: {}", matches.len());
 }
 
 pub fn historico(jogo: &Jogo, quantidade: usize) -> Result<()> {
     let mut sorteios: Vec<Sorteio>;
 
-    if file::is_update_needed(&jogo).unwrap_or(true) {
-        let content = client::fetch_all(&jogo)?;
+    if file::is_update_needed(jogo).unwrap_or(true) {
+        let content = client::fetch_all(jogo)?;
         file::save_json(&content)?;
     }
 
-    if let Ok(value) = file::load_json(&jogo) {
+    if let Ok(value) = file::load_json(jogo) {
         sorteios = value;
     } else {
-        let content = client::fetch_all(&jogo)?;
+        let content = client::fetch_all(jogo)?;
         file::save_json(&content)?;
-        sorteios = file::load_json(&jogo)?;
+        sorteios = file::load_json(jogo)?;
     }
 
     if quantidade > 0 {
@@ -246,7 +246,7 @@ pub fn get_numeros_e_ocorrencias(sorteios: &Vec<Sorteio>) -> Vec<(u8, u32)> {
 }
 
 pub fn imprimir_numeros_mais_sorteados(sorteios: &Vec<Sorteio>, quantidade: usize) {
-    let ocorrencias = get_numeros_e_ocorrencias(&sorteios);
+    let ocorrencias = get_numeros_e_ocorrencias(sorteios);
     let ocorrencias = ocorrencias.iter().take(quantidade);
 
     let mut output = Vec::new();
@@ -267,17 +267,17 @@ pub fn imprimir_numeros_mais_sorteados(sorteios: &Vec<Sorteio>, quantidade: usiz
 pub fn analisar(jogo: &Jogo, numeros: &[u8], quantidade: usize) -> Result<()> {
     let mut sorteios: Vec<Sorteio>;
 
-    if file::is_update_needed(&jogo).unwrap_or(true) {
-        let content = client::fetch_all(&jogo)?;
+    if file::is_update_needed(jogo).unwrap_or(true) {
+        let content = client::fetch_all(jogo)?;
         file::save_json(&content)?;
     }
 
-    if let Ok(value) = file::load_json(&jogo) {
+    if let Ok(value) = file::load_json(jogo) {
         sorteios = value;
     } else {
-        let content = client::fetch_all(&jogo)?;
+        let content = client::fetch_all(jogo)?;
         file::save_json(&content)?;
-        sorteios = file::load_json(&jogo)?;
+        sorteios = file::load_json(jogo)?;
     }
 
     if quantidade > 0 {
@@ -286,7 +286,7 @@ pub fn analisar(jogo: &Jogo, numeros: &[u8], quantidade: usize) -> Result<()> {
 
     sorteios.reverse();
 
-    analisar_sorteios(&jogo, &numeros, &sorteios);
+    analisar_sorteios(jogo, numeros, &sorteios);
 
     println!("\nPara mais resultados, adicione a opcao '--quantidade <valor>' ou '-q <valor>'.");
 

@@ -20,8 +20,8 @@ pub enum Commands {
     #[clap(about = "Consultar ultimo sorteio e comparar com aposta(s).")]
     Consultar {
         jogo: data::Jogo,
-        #[clap(help = "Opcional: Numeros de uma aposta. Ex. 04-08-15-16-23-42")]
-        numeros: Option<String>,
+        #[clap(help = "Opcional: Apostas. Ex. 04-08-15-16-23-42 03-07-14-15-22-41")]
+        numeros: Option<Vec<String>>,
     },
     #[clap(about = "Mostrar historico de sorteios.")]
     Historico {
@@ -71,12 +71,15 @@ pub fn run() -> Result<()> {
     Ok(())
 }
 
-fn consultar(jogo: &data::Jogo, numeros: &Option<String>) -> Result<()> {
+fn consultar(jogo: &data::Jogo, numeros: &Option<Vec<String>>) -> Result<()> {
     match numeros {
         Some(nums) => {
-            let numeros = parsers::vec_u8_from_str(&nums)?;
-            jogo.validar(&numeros)?;
-            commands::consultar_numeros(&jogo, &vec![numeros.as_slice()])?;
+            let apostas = parsers::vstrings_to_vu8s(nums)?;
+            for aposta in &apostas {
+                jogo.validar(aposta)?;
+            }
+            let apostas_refs: Vec<&[u8]> = apostas.iter().map(|v| v.as_slice()).collect();
+            commands::consultar_numeros(jogo, &apostas_refs)?;
         }
         None => {
             if atty::isnt(atty::Stream::Stdin) {
@@ -84,18 +87,18 @@ fn consultar(jogo: &data::Jogo, numeros: &Option<String>) -> Result<()> {
                 let numbers_from_file = parsers::vec_u8_from_buffer()?;
                 let numbers_refs: Vec<&[u8]> =
                     numbers_from_file.iter().map(|v| v.as_slice()).collect();
-                commands::consultar_numeros(&jogo, &numbers_refs)?;
+                commands::consultar_numeros(jogo, &numbers_refs)?;
             } else {
-                commands::consultar(&jogo)?;
+                commands::consultar(jogo)?;
             }
         }
     }
     Ok(())
 }
 
-fn analisar(jogo: &data::Jogo, numeros: &String, quantidade: usize) -> Result<()> {
-    let numeros = parsers::vec_u8_from_str(&numeros)?;
+fn analisar(jogo: &data::Jogo, numeros: &str, quantidade: usize) -> Result<()> {
+    let numeros = parsers::vec_u8_from_str(numeros)?;
     jogo.validar(&numeros)?;
-    commands::analisar(&jogo, numeros.as_slice(), quantidade)?;
+    commands::analisar(jogo, numeros.as_slice(), quantidade)?;
     Ok(())
 }
